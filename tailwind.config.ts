@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,17 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				chatgpt: {
+					'user-bg': '#f7f7f8',
+					'assistant-bg': '#ffffff',
+					'sidebar-bg': '#202123',
+					'sidebar-hover': '#2a2b32',
+					'prompt-bg': '#ffffff',
+					'prompt-border': '#e5e5e5',
+					'prompt-focus': '#10a37f',
+					'button-primary': '#10a37f',
+					'button-primary-hover': '#0e906f',
 				}
 			},
 			borderRadius: {
@@ -84,11 +96,16 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'pulse-light': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.5' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-light': 'pulse-light 1.5s ease-in-out infinite'
 			}
 		}
 	},
