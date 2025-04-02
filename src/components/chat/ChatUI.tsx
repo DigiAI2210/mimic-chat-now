@@ -41,7 +41,7 @@ export const ChatUI: React.FC = () => {
       messages: [{
         id: 'initial',
         role: 'assistant',
-        content: 'Hello! I'm ChatGPT, a large language model trained by OpenAI. How can I assist you today?'
+        content: "Hello! I'm ChatGPT, a large language model trained by OpenAI. How can I assist you today?"
       }]
     }
   ]);
