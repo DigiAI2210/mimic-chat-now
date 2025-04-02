@@ -31,26 +31,28 @@ interface Conversation {
   messages: Message[];
 }
 
+// Default initial conversation
+const defaultConversation: Conversation = {
+  id: '1',
+  title: 'Welcome to ChatGPT',
+  messages: [{
+    id: 'initial',
+    role: 'assistant',
+    content: "Hello! I'm ChatGPT, a large language model trained by OpenAI. How can I assist you today?"
+  }]
+};
+
 export const ChatUI: React.FC = () => {
   const isMobile = useIsMobile();
   const [sidebarOpen, setSidebarOpen] = useState(!isMobile);
-  const [conversations, setConversations] = useState<Conversation[]>([
-    {
-      id: '1',
-      title: 'Welcome to ChatGPT',
-      messages: [{
-        id: 'initial',
-        role: 'assistant',
-        content: "Hello! I'm ChatGPT, a large language model trained by OpenAI. How can I assist you today?"
-      }]
-    }
-  ]);
+  const [conversations, setConversations] = useState<Conversation[]>([defaultConversation]);
   const [activeConversationId, setActiveConversationId] = useState<string>('1');
   const [isWaitingForResponse, setIsWaitingForResponse] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Get current conversation
-  const currentConversation = conversations.find(c => c.id === activeConversationId) || conversations[0];
+  // Get current conversation with fallback to first conversation or default
+  const currentConversation = conversations.find(c => c.id === activeConversationId) || 
+                             (conversations.length > 0 ? conversations[0] : defaultConversation);
   
   // Create a new conversation
   const handleNewConversation = () => {
@@ -156,7 +158,15 @@ export const ChatUI: React.FC = () => {
   // Scroll to bottom when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [currentConversation.messages, isWaitingForResponse]);
+  }, [currentConversation?.messages, isWaitingForResponse]);
+
+  // If there are no conversations, create a default one
+  useEffect(() => {
+    if (conversations.length === 0) {
+      setConversations([defaultConversation]);
+      setActiveConversationId(defaultConversation.id);
+    }
+  }, [conversations]);
 
   return (
     <div className="flex h-screen overflow-hidden">
